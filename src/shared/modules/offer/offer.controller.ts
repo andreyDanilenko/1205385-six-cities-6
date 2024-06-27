@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 import { Request, Response } from 'express';
-import { BaseController, HttpError, HttpMethod } from '../../libs/rest/index.js';
+import { BaseController, HttpError, HttpMethod, ValidateObjectIdMiddleware } from '../../libs/rest/index.js';
 import { Component } from '../../types/component.enum.js';
 import { Logger } from '../../libs/logger/index.js';
 import { OfferService } from './offer-service.interface.js';
@@ -24,11 +24,31 @@ export class OfferController extends BaseController {
     this.logger.info('Register routes for Offer controller...');
 
     this.addRoute({path: '/', method: HttpMethod.GET, handler: this.index});
-    this.addRoute({path: '/:offerId', method: HttpMethod.GET, handler: this.show });
+    this.addRoute({
+      path: '/:offerId',
+      method: HttpMethod.GET,
+      handler: this.show,
+      middlewares: [new ValidateObjectIdMiddleware('offerId')]
+    });
     this.addRoute({path: '/create', method: HttpMethod.POST, handler: this.create});
-    this.addRoute({ path: '/:offerId', method: HttpMethod.DELETE, handler: this.delete });
-    this.addRoute({ path: '/:offerId', method: HttpMethod.PATCH, handler: this.update });
-    this.addRoute({ path: '/:offerId/comments', method: HttpMethod.GET, handler: this.getComments });
+    this.addRoute({
+      path: '/:offerId',
+      method: HttpMethod.DELETE,
+      handler: this.delete,
+      middlewares: [new ValidateObjectIdMiddleware('offerId')]
+    });
+    this.addRoute({
+      path: '/:offerId',
+      method: HttpMethod.PATCH,
+      handler: this.update,
+      middlewares: [new ValidateObjectIdMiddleware('offerId')]
+    });
+    this.addRoute({
+      path: '/:offerId/comments',
+      method: HttpMethod.GET,
+      handler: this.getComments,
+      middlewares: [new ValidateObjectIdMiddleware('offerId')]
+    });
   }
 
   public async show({ params }: Request<ParamOfferId>, res: Response): Promise<void> {
