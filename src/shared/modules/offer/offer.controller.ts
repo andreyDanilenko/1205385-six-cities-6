@@ -1,12 +1,11 @@
 import { inject, injectable } from 'inversify';
 import { Request, Response } from 'express';
-import { BaseController, HttpError, HttpMethod, ValidateObjectIdMiddleware, ValidateDtoMiddleware } from '../../libs/rest/index.js';
+import { BaseController, HttpMethod, ValidateObjectIdMiddleware, ValidateDtoMiddleware } from '../../libs/rest/index.js';
 import { Component } from '../../types/component.enum.js';
 import { Logger } from '../../libs/logger/index.js';
 import { OfferService } from './offer-service.interface.js';
 import { OfferRdo } from './rdo/offer.rdo.js';
 import { fillDTO } from '../../helpers/index.js';
-import { StatusCodes } from 'http-status-codes';
 import { ParamOfferId } from './type/param-offerid.type.js';
 import { CreateOfferRequest } from './type/create-offer-request.type.js';
 import { UpdateOfferDto } from './dto/update-offer.dto.js';
@@ -104,7 +103,7 @@ export class OfferController extends BaseController {
 
   public async delete({ params }: Request<ParamOfferId>, res: Response): Promise<void> {
     const { offerId } = params;
-    const offer = await this.offerService.deleteById(offerId);
+    await this.offerService.deleteById(offerId);
 
     // if (!offer) {
     //   throw new HttpError(
@@ -114,7 +113,7 @@ export class OfferController extends BaseController {
     //   );
     // }
 
-    this.noContent(res, offer);
+    this.ok(res, fillDTO(OfferRdo, { result: 'ok' }));
   }
 
   public async update({ body, params }: Request<ParamOfferId, unknown, UpdateOfferDto>, res: Response): Promise<void> {
