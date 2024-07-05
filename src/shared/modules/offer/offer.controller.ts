@@ -61,8 +61,6 @@ export class OfferController extends BaseController {
   }
 
   public async show({ params }: Request<ParamOfferId>, res: Response): Promise<void> {
-    console.log('2',params);
-
     const { offerId } = params;
     const offer = await this.offerService.findById(offerId);
 
@@ -86,10 +84,7 @@ export class OfferController extends BaseController {
 
   public async create({ body }: CreateOfferRequest, res: Response): Promise<void> {
     const result = await this.offerService.create(body);
-    console.log('result', result);
     const offer = await this.offerService.findById(result.id);
-    console.log('offer', offer);
-
     this.created(res, fillDTO(OfferRdo, offer));
   }
 
@@ -134,7 +129,6 @@ export class OfferController extends BaseController {
     const comments = await this.commentService.findByOfferId(params.offerId);
     this.ok(res, fillDTO(CommentRdo, comments));
   }
-
 
   public async getNew(_req: Request, res: Response) {
     const newOffers = await this.offerService.findNew(DEFAULT_NEW_OFFER_COUNT);

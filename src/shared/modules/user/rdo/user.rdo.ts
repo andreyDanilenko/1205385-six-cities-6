@@ -8,8 +8,11 @@ export class UserRdo {
   public avatarUrl: string;
 
   @Expose()
-  public name: string;
+  public firstName: string;
 
   @Expose()
-  public isPro: boolean;
+  public lastName: string;
+
+  @Expose()
+  public isPro?: boolean;
 }

@@ -18,17 +18,19 @@ export function createOffer(offerData: string): Offer {
     goods,
     avatarUrl,
     isPro,
-    name,
+    firstName,
     email,
     latitude,
-    longitude
+    longitude,
+    lastName,
   ] = offerData.replace('\n', '').split('\t');
 
   const user = {
     email,
     isPro: Boolean(isPro),
     avatarUrl,
-    name,
+    firstName,
+    lastName,
   };
 
   const location = {
