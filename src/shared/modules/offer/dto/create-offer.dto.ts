@@ -24,13 +24,24 @@ export class CreateOfferDto {
   @IsEnum(OfferType, { message: CreateOfferValidationMessage.type.invalid })
   public type: OfferType;
 
+  @MinLength(1)
+  @MaxLength(10)
   public bedrooms: number;
+
+  @MinLength(1)
+  @MaxLength(10)
   public maxAdults: number;
+
+  public isFavorite?: boolean;
+
+  public isPremium?: boolean;
 
   @IsInt({ message: CreateOfferValidationMessage.price.invalidFormat })
   @Min(100, { message: CreateOfferValidationMessage.price.minValue })
   @Max(200000, { message: CreateOfferValidationMessage.price.maxValue })
   public price: number;
+
+  public rating?: number;
 
   public goods: Good[];
 
