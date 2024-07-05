@@ -57,10 +57,6 @@ export class RestApplication {
   public async init() {
     this.logger.info('Application initialization');
 
-    this.logger.info('Init exception filters');
-    await this._initExceptionFilters();
-    this.logger.info('Exception filters initialization completed');
-
     this.logger.info('Init database...');
     await this.initDb();
     this.logger.info('Init database completed');
@@ -72,6 +68,10 @@ export class RestApplication {
     this.logger.info('Init controllers...');
     await this._initController();
     this.logger.info('Init controllers completed');
+
+    this.logger.info('Init exception filters');
+    await this._initExceptionFilters();
+    this.logger.info('Exception filters initialization completed');
 
     this.logger.info('Trying to init server...');
     await this._initServer();
