@@ -55,6 +55,8 @@ export class OfferController extends BaseController {
   }
 
   public async show({ params }: Request<ParamOfferId>, res: Response): Promise<void> {
+    console.log('2',params);
+
     const { offerId } = params;
     const offer = await this.offerService.findById(offerId);
 

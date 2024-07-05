@@ -1,1 +1,4 @@
-export type OfferType = 'apartment' | 'house' | 'room' | 'hotel';
+export enum OfferType {
+  Buy = 'Buy',
+  Sell = 'Sell',
+}
