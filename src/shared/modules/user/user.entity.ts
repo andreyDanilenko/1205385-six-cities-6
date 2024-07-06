@@ -22,10 +22,10 @@ export class UserEntity extends defaultClasses.TimeStamps implements User {
   @prop({ required: true, default: '' })
   public firstName: string;
 
-  @prop({ default: '' })
+  @prop({ required: false, default: '' })
   public lastName: string;
 
-  @prop({ default: false })
+  @prop({ required: false, default: false })
   public isPro: boolean;
 
   @prop({ required: true, default: '' })
